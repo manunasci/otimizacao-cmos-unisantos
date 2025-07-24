@@ -1,4 +1,4 @@
-# ⚙️ Otimização de Aplificador CMOS com Algoritmo Genético
+# ⚙️ Otimização de Amplificador CMOS com Algoritmo Genético
 
 Este repositório apresenta o projeto de **Iniciação Científica** dedicado à **Otimização de um Amplificador CMOS** por meio de um **Algoritmo Genético**, combinando técnicas de simulação analógica com inteligência computacional para encontrar configurações ideais de desempenho.
 
