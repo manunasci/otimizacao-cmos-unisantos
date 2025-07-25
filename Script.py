@@ -1,60 +1,112 @@
 import os
+import glob
+import subprocess
+import itertools
 import numpy as np
-from PyLTSpice import SimRunner, RawRead
+import csv
 
-LTSPICE_EXE = r"C:\Users\holam\OneDrive - Sociedade Visconde de São Leopoldo\Área de Trabalho\Iniciação Cientifica"
+# -------------------------------------------------------------------
+# 1) CAMINHO ABSOLUTO DA SUA BIBLIOTECA .lib
+# -------------------------------------------------------------------
+LIB_PATH = r"C:\Users\holam\OneDrive - Sociedade Visconde de São Leopoldo\Área de Trabalho\otimizacao-cmos-unisantos\transistor_model.lib"
 
-CIRCUIT_FILE =  'CMOS class AB Output STAGES.asc'
+# -------------------------------------------------------------------
+# 2) LOCALIZAÇÃO DO EXECUTÁVEL LTspice
+# -------------------------------------------------------------------
+candidates = glob.glob(r"C:\Program Files\ADI\LTspice\LTspice.exe")
+if not candidates:
+    raise FileNotFoundError("Não achei LTspice.exe em 'C:\\Program Files\\ADI'.")
+LTSPICE_EXE = candidates[0]
 
-def analisar_circuito_saida(wn_out_val, wp_out_val, wn_bias_val, wp_bias_val, bias_val):
+# -------------------------------------------------------------------
+# 3) CONFIGURAÇÃO DE PARÂMETROS
+# -------------------------------------------------------------------
+WORKDIR     = "simulacoes"
+os.makedirs(WORKDIR, exist_ok=True)
 
-    """
-    Roda a simulação para um conjunto de parâmetros do amplificador Classe AB
-    e extrai as métricas de desempenho.
-    
-    Args:
-        wn_out_val (float): Largura do transistor NMOS de saída (M2) em micrômetros.
-        wp_out_val (float): Largura do transistor PMOS de saída (M3) em micrômetros.
-        wn_bias_val (float): Largura do transistor NMOS de bias (M8) em micrômetros.
-        wp_bias_val (float): Largura do transistor PMOS de bias (M6) em micrômetros.
-        bias_val (float): Tensão de polarização (V4) em Volts.
-    """
-    
-    print("="*60)
-    print(f"Analisando com: Wn_out={wn_out_val:.1f}u, Wp_out={wp_out_val:.1f}u, "
-          f"Wn_bias={wn_bias_val:.1f}u, Wp_bias={wp_bias_val:.1f}u, Bias={bias_val:.2f}V")
-    print("="*60)
+W_vals     = [10e-6, 20e-6, 30e-6]
+L_vals     = [0.18e-6, 0.5e-6]
+Vbias_vals = [0.7, 1.0, 1.2]
 
-    try:
-        runner = SimRunner(output_folder='./temp', simulator=LTSPICE_EXE)
+# -------------------------------------------------------------------
+# 4) TEMPLATE DE NETLIST COM .measure (nível principal)
+# -------------------------------------------------------------------
+NETLIST_TEMPLATE = f"""* Amplificador CMOS – W={{W}} L={{L}} Vbias={{Vbias}}
+.param W={{W}} L={{L}} Vbias={{Vbias}}
 
-        runner.set_parameter('Wn_out', f"{wn_out_val}u")
-        runner.set_parameter('Wp_out', f"{wp_out_val}u")
-        runner.set_parameter('Wn_bias', f"{wn_bias_val}u")
-        runner.set_parameter('Wp_bias', f"{wp_bias_val}u")
-        runner.set_parameter('bias', bias_val)
+* Modelos de fallback
+.model nmos NMOS
+.model pmos PMOS
 
-        print("Rodando simulações (.ac e .op) no LTSpice...")
-        runner.run(CIRCUIT_FILE)
-        print("Simulação concluída.")
+* Biblioteca de processo
+.include "{LIB_PATH}"
 
-        if not os.path.exists(raw_file):
-            print("\nERRO: Arquivo de resultado não encontrado. A simulação pode ter falhado.")
-            return None
-        
-        data = RawRead(raw_file)
+* Componentes
+M1    out in   bias 0   nmos W={{W}} L={{L}}
+Rload out vdd       10k
+Vbias bias 0        DC {{Vbias}}
+Vin   in   0        AC 1
+Vdd   vdd  0        DC 1.8
 
-        ac_data = data.get_trace("V(out)")
-        freqs = data.get_axis()
+* Análises
+.op
+.ac dec 100 1 1e9
 
-        gain_complex = ac_data.get_point(1e3) 
-        gain_magnitude = np.abs(gain_complex)
-        gain_db = 20 * np.log10(gain_magnitude) if gain_magnitude > 0 else
+* Medições no log
+.measure ac GMAX MAX mag(v(out)/v(in))
+.measure ac FC   WHEN mag(v(out)/v(in))=GMAX/sqrt(2)
 
-        gain_max_lin = np.max(np.abs(ac_data.get_wave()))
+.end
+"""
 
-        try:
-              freq_3db_idx = np.where(np.abs(ac_data.get_wave()) < gain_max_lin / np.sqrt(2))[0][0]
-            bw_hz = freqs[freq_3db_idx]
-        except IndexError:
-            bw_hz = freqs[-1] if len(freqs) > 0 else 0 
+# -------------------------------------------------------------------
+# 5) VARREDURA E COLETA
+# -------------------------------------------------------------------
+results = []
+for W, L, Vb in itertools.product(W_vals, L_vals, Vbias_vals):
+    tag      = f"W{W:.0e}_L{L:.0e}_V{int(Vb*1e3)}mV"
+    cir_path = os.path.join(WORKDIR, f"amp_{tag}.cir")
+    log_path = os.path.join(WORKDIR, f"amp_{tag}.log")
+
+    # Gera netlist
+    with open(cir_path, "w") as f:
+        f.write(NETLIST_TEMPLATE.format(W=W, L=L, Vbias=Vb))
+
+    # Roda LTspice em batch/ASCII
+    cmd = [LTSPICE_EXE, "-ascii", "-b", cir_path, "-log", log_path]
+    print("⏳ Executando:", " ".join(cmd))
+    subprocess.run(cmd, check=True)
+
+    # Parse das medições no log
+    Gmax = np.nan
+    fc   = np.nan
+    Idd  = np.nan
+    with open(log_path, "r") as lf:
+        for line in lf:
+            if line.startswith("GMAX"):
+                # Ex.: GMAX: MAX mag(v(out)/v(in)) = 24.3 dB at 1.00e+06 Hz
+                parts = line.split("=")[1].split()
+                Gmax  = float(parts[0])
+            elif line.startswith("FC"):
+                # Ex.: FC: WHEN ... = 3.16e+05
+                parts = line.split("=")[1].split()
+                fc    = float(parts[0])
+            elif "I(Vdd)" in line:
+                try:
+                    Idd = abs(float(line.split()[1]))
+                except:
+                    pass
+
+    Power = 1.8 * Idd
+    results.append((W, L, Vb, Gmax, fc, Power))
+
+# -------------------------------------------------------------------
+# 6) SALVA NO CSV
+# -------------------------------------------------------------------
+csv_path = os.path.join(WORKDIR, "simulation_results.csv")
+with open(csv_path, "w", newline="") as f:
+    w = csv.writer(f)
+    w.writerow(["W (m)", "L (m)", "Vbias (V)", "Gain (dB)", "fc (Hz)", "Power (W)"])
+    w.writerows(results)
+
+print("✅ Pronto! Veja:", csv_path)
