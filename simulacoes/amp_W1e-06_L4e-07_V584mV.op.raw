@@ -1,0 +1,34 @@
+Title: * Amplificador CMOS – W=1.4711150920810692e-06 L=3.7692453303378316e-07 Vbias=0.5842798035486652
+Date: Wed Jul 30 16:06:23 2025
+Plotname: Operating Point
+Flags: real
+No. Variables: 12
+No. Points:            1
+Offset:    0.0000000000000000e+00
+Command: Linear Technology Corporation LTspice
+Variables:
+	0	V(out)	voltage
+	1	V(in)	voltage
+	2	V(bias)	voltage
+	3	V(vdd)	voltage
+	4	Id(M1)	device_current
+	5	Ig(M1)	device_current
+	6	Ib(M1)	device_current
+	7	Is(M1)	device_current
+	8	I(Rload)	device_current
+	9	I(Vbias)	device_current
+	10	I(Vin)	device_current
+	11	I(Vdd)	device_current
+Values:
+0		1.799999969742799e+00
+	0.000000000000000e+00
+	5.842798035486652e-01
+	1.800000000000000e+00
+	3.025720135936932e-12
+	0.000000000000000e+00
+	-2.404279773289917e-12
+	-6.214403626470144e-13
+	-3.025720141103250e-12
+	6.214403626470150e-13
+	0.000000000000000e+00
+	-3.025720136679705e-12
