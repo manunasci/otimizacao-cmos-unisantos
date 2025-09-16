@@ -1,0 +1,14 @@
+* GA CMOS Amp | W=4.027337936900854e-05 L=2.087032052934154e-07 Vbias=0.6949228640418748
+.param W=4.027337936900854e-05 L=2.087032052934154e-07 Vbias=0.6949228640418748
+.options numdgt=6
+.options plotwinsize=0
+.include "models.lib"
+* Device
+M1  out g  0  0  N_1u  W=4.027337936900854e-05  L=2.087032052934154e-07
+Rload out vdd 10k
+Vg  g   0  DC 0.6949228640418748 AC 1
+Vdd vdd 0  DC 1.8
+.op
+.ac dec 400 1 1e9
+.save V(out)
+.end

@@ -1,0 +1,43 @@
+LTspice 24.0.9 for Windows
+Circuit: * GA CMOS Amp | W=1.5527274481776948e-06 L=6.22127038914818e-07 Vbias=1.4000244823851957
+Start Time: Mon Sep  8 18:47:09 2025
+solver = Normal
+Maximum thread count: 2
+tnom = 27
+temp = 27
+method = modified trap
+AsciiRawFile = 1
+Instance "m1": Length shorter than recommended for a level 3 MOSFET.
+Instance "m1": Width narrower than recommended for a level 3 MOSFET.
+Direct Newton iteration for .op point succeeded.
+Semiconductor Device Operating Points:
+                        --- MOSFET Transistors ---
+Name:          m1
+Model:        n_1u
+Id:          3.87e-05
+Vgs:         1.40e+00
+Vds:         1.41e+00
+Vbs:         0.00e+00
+Vth:         8.81e-01
+Vdsat:       3.14e-01
+Gm:          1.01e-04
+Gds:         2.08e-05
+Gmb:         3.56e-05
+Cbd:         0.00e+00
+Cbs:         0.00e+00
+Cgsov:       3.11e-16
+Cgdov:       3.11e-16
+Cgbov:       4.22e-17
+Cgs:         7.54e-16
+Cgd:         0.00e+00
+Cgb:         0.00e+00
+
+
+
+gain_db: MAX(db(v(out)/v(g)))=(28.734dB,93.3391°) FROM 1 TO 1e+09
+gain_lin: MAX(mag(v(out)/v(g)))=(-1.59155dB,0°) FROM 1 TO 1e+09
+
+Measurement "fc" FAIL'ed
+
+Total elapsed time: 0.430 seconds.
+

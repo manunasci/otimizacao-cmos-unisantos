@@ -1,0 +1,2 @@
+* toy_nmos.lib - modelo NMOS simples (Level-1)
+.model nch NMOS (LEVEL=1 VTO=0.6 KP=200e-6 LAMBDA=0.03 GAMMA=0.4 PHI=0.7)

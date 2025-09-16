@@ -1,0 +1,35 @@
+LTspice 24.0.9 for Windows
+Circuit: * GA CMOS Amp | W=2.628777634427698e-06 L=1e-06 Vbias=1.2225527880022047
+Start Time: Mon Sep  8 20:13:35 2025
+solver = Normal
+Maximum thread count: 2
+tnom = 27
+temp = 27
+method = modified trap
+AsciiRawFile = 1
+Direct Newton iteration for .op point succeeded.
+Semiconductor Device Operating Points:
+                        --- MOSFET Transistors ---
+Name:          m1
+Model:        n_1u
+Id:          2.15e-05
+Vgs:         1.22e+00
+Vds:         1.59e+00
+Vbs:         0.00e+00
+Vth:         8.78e-01
+Vdsat:       2.84e-01
+Gm:          9.33e-05
+Gds:         3.81e-06
+Gmb:         3.11e-05
+Cbd:         0.00e+00
+Cbs:         0.00e+00
+Cgsov:       5.26e-16
+Cgdov:       5.26e-16
+Cgbov:       8.00e-17
+Cgs:         2.42e-15
+Cgd:         0.00e+00
+Cgb:         0.00e+00
+
+
+Total elapsed time: 1.454 seconds.
+

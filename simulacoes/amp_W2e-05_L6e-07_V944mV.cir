@@ -1,28 +1,14 @@
-* Amplificador CMOS – W=1.6906280810099342e-05 L=6.394351394788377e-07 Vbias=0.9443243398680535
-.param W=1.6906280810099342e-05 L=6.394351394788377e-07 Vbias=0.9443243398680535
-
-* Modelos de fallback
-.model nmos NMOS
-.model pmos PMOS
-
-* Biblioteca de processo
-.include "C:\Users\holam\OneDrive - Sociedade Visconde de São Leopoldo\Área de Trabalho\otimizacao-cmos-unisantos\transistor_model.lib"
-
-* Dispositivos
-M1    out in   bias 0   nmos W=1.6906280810099342e-05 L=6.394351394788377e-07
-Rload out vdd       10k
-Vbias bias 0        DC 0.9443243398680535
-Vin   in   0        AC 1
-Vdd   vdd  0        DC 1.8
-
-* Análises
-.op
-.ac dec 100 1 1e9
-
-* Medições
-.measure ac GAIN_LIN MAX mag(v(out)/v(in))
-.measure ac GAIN_DB  MAX db(v(out)/v/in))
-.measure ac FC       WHEN mag(v(out)/v(in))=GAIN_LIN/sqrt(2)
-.measure op  Idd     FIND I(Vdd)
-
-.end
+* GA CMOS Amp | W=1.957439618740792e-05 L=5.676710824021945e-07 Vbias=0.9440428510364561
+.param W=1.957439618740792e-05 L=5.676710824021945e-07 Vbias=0.9440428510364561
+.options numdgt=6
+.options plotwinsize=0
+.include "models.lib"
+* Device
+M1  out g  0  0  N_1u  W=1.957439618740792e-05  L=5.676710824021945e-07
+Rload out vdd 10k
+Vg  g   0  DC 0.9440428510364561 AC 1
+Vdd vdd 0  DC 1.8
+.op
+.ac dec 400 1 1e9
+.save V(out)
+.end

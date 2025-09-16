@@ -1,0 +1,37 @@
+LTspice 24.0.9 for Windows
+Circuit: * GA CMOS Amp | W=4.781083767129823e-05 L=5.600012776394898e-07 Vbias=1.2320470890676387
+Start Time: Sat Sep  6 22:04:57 2025
+solver = Normal
+Maximum thread count: 2
+tnom = 27
+temp = 27
+method = modified trap
+AsciiRawFile = 1
+Direct Newton iteration for .op point succeeded.
+Semiconductor Device Operating Points:
+                        --- BSIM4 MOSFETS ---
+Name:      m1
+Model:      n
+Id:      1.78e-04
+Vgs:     1.23e+00
+Vds:     2.20e-02
+Vbs:     0.00e+00
+Vth:     2.48e-01
+Vdsat:   6.93e-01
+Gm:     -1.59e-05
+Gds:     8.11e-03
+Gmb      9.99e-05
+Cbd:     2.37e-14
+Cbs:     3.82e-14
+
+
+.measure op idd find i(vdd)
+  Error: FIND can not be evaluated over an interval.
+
+gain_db: MAX(db(v(out)/v(g)))=(33.7302dB,180°) FROM 1 TO 1e+09
+gain_lin: MAX(mag(v(out)/v(g)))=(-8.59272dB,0°) FROM 1 TO 1e+09
+
+Measurement "fc" FAIL'ed
+
+Total elapsed time: 0.699 seconds.
+

@@ -1,46 +1,37 @@
 LTspice 24.0.9 for Windows
-Circuit: * Amplificador CMOS – W=9.661039624924882e-06 L=3.9073328076194345e-07 Vbias=0.7494700535843467
-Start Time: Wed Jul 30 16:08:08 2025
+Circuit: * GA CMOS Amp | W=1.4934649771968862e-05 L=4.4166428973870966e-07 Vbias=0.7485119082200092
+Start Time: Sat Sep  6 22:04:00 2025
 solver = Normal
 Maximum thread count: 2
 tnom = 27
 temp = 27
 method = modified trap
 AsciiRawFile = 1
-Instance "m1": Length shorter than recommended for a level 1 MOSFET.
-Instance "m1": Width narrower than recommended for a level 1 MOSFET.
 Direct Newton iteration for .op point succeeded.
 Semiconductor Device Operating Points:
-                        --- MOSFET Transistors ---
-Name:          m1
-Model:        nmos
-Id:          2.86e-12
-Vgs:        -7.49e-01
-Vds:         1.05e+00
-Vbs:        -7.49e-01
-Vth:         0.00e+00
-Vdsat:       0.00e+00
-Gm:          0.00e+00
-Gds:         0.00e+00
-Gmb:         0.00e+00
-Cbd:         0.00e+00
-Cbs:         0.00e+00
-Cgsov:       0.00e+00
-Cgdov:       0.00e+00
-Cgbov:       0.00e+00
-Cgs:         0.00e+00
-Cgd:         0.00e+00
-Cgb:         0.00e+00
+                        --- BSIM4 MOSFETS ---
+Name:      m1
+Model:      n
+Id:      1.74e-04
+Vgs:     7.49e-01
+Vds:     6.20e-02
+Vbs:     0.00e+00
+Vth:     2.55e-01
+Vdsat:   3.71e-01
+Gm:      1.31e-04
+Gds:     2.55e-03
+Gmb      1.63e-04
+Cbd:     7.32e-15
+Cbs:     1.19e-14
 
 
 .measure op idd find i(vdd)
   Error: FIND can not be evaluated over an interval.
 
-gain_lin: MAX(mag(v(out)/v(in)))=(-infdB,0°) FROM 1 TO 1e+09
-
-Measurement "gain_db" FAIL'ed
+gain_db: MAX(db(v(out)/v(g)))=(31.5414dB,133.731°) FROM 1 TO 1e+09
+gain_lin: MAX(mag(v(out)/v(g)))=(-10.6889dB,0°) FROM 1 TO 1e+09
 
 Measurement "fc" FAIL'ed
 
-Total elapsed time: 0.772 seconds.
+Total elapsed time: 2.124 seconds.
 

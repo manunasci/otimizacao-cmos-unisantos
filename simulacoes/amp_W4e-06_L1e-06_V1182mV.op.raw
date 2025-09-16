@@ -1,0 +1,30 @@
+Title: * GA CMOS Amp | W=4.25347110424219e-06 L=1e-06 Vbias=1.182198616639895
+Date: Mon Sep  8 18:46:45 2025
+Plotname: Operating Point
+Flags: real
+No. Variables: 10
+No. Points:            1
+Offset:    0.0000000000000000e+00
+Command: Linear Technology Corporation LTspice
+Variables:
+	0	V(out)	voltage
+	1	V(g)	voltage
+	2	V(vdd)	voltage
+	3	Id(M1)	device_current
+	4	Ig(M1)	device_current
+	5	Ib(M1)	device_current
+	6	Is(M1)	device_current
+	7	I(Rload)	device_current
+	8	I(Vg)	device_current
+	9	I(Vdd)	device_current
+Values:
+0		1.462812912853510e+00
+	1.182198616639895e+00
+	1.800000000000000e+00
+	3.371750531146027e-05
+	0.000000000000000e+00
+	-1.472812912853510e-12
+	-3.371750383864735e-05
+	-3.371870871464904e-05
+	0.000000000000000e+00
+	-3.371870871464902e-05

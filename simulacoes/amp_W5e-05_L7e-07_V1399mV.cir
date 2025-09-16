@@ -1,0 +1,22 @@
+* GA CMOS Amp | W=5e-05 L=6.9552553910936e-07 Vbias=1.3989466046262509
+.param W=5e-05 L=6.9552553910936e-07 Vbias=1.3989466046262509
+
+.options numdgt=6
+.include "C:\Users\holam\OneDrive - Sociedade Visconde de São Leopoldo\Área de Trabalho\otimizacao-cmos-unisantos\cmosedu_models.txt"
+
+* Dispositivo
+M1  out g  0  0  N  W=5e-05  L=6.9552553910936e-07
+Rload out vdd 10k
+Vg  g   0  DC 1.3989466046262509 AC 1
+Vdd vdd 0  DC 1.8
+
+.op
+.ac dec 100 1 1e9
+
+.measure ac GAIN_DB  MAX  db(v(out)/v(g))
+.measure ac GAIN_LIN MAX  mag(v(out)/v(g))
+* UGBW (|H|=1) - se não cruzar, não mata a simulação (medida só falha)
+.measure ac FC WHEN mag(v(out)/v(g))=1 CROSS=1
+.measure op Idd FIND I(Vdd)
+
+.end

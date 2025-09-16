@@ -1,6 +1,6 @@
 LTspice 24.0.9 for Windows
 Circuit: * Amplificador CMOS – W=2e-05 L=1.8e-07 Vbias=1.2
-Start Time: Fri Jul 25 17:51:18 2025
+Start Time: Sat Sep  6 21:26:42 2025
 solver = Normal
 Maximum thread count: 2
 tnom = 27
@@ -37,5 +37,5 @@ gmax: MAX(mag(v(out)/v(in)))=(-infdB,0°) FROM 1 TO 1e+09
 
 Measurement "fc" FAIL'ed
 
-Total elapsed time: 0.313 seconds.
+Total elapsed time: 0.436 seconds.
 

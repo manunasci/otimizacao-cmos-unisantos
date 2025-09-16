@@ -1,0 +1,37 @@
+LTspice 24.0.9 for Windows
+Circuit: * GA CMOS Amp | W=1e-06 L=9.285897297368611e-07 Vbias=0.5
+Start Time: Mon Sep  8 20:21:30 2025
+solver = Normal
+Maximum thread count: 2
+tnom = 27
+temp = 27
+method = modified trap
+AsciiRawFile = 1
+Instance "m1": Length shorter than recommended for a level 3 MOSFET.
+Instance "m1": Width narrower than recommended for a level 3 MOSFET.
+Direct Newton iteration for .op point succeeded.
+Semiconductor Device Operating Points:
+                        --- MOSFET Transistors ---
+Name:          m1
+Model:        n_1u
+Id:          5.75e-11
+Vgs:         5.00e-01
+Vds:         1.80e+00
+Vbs:         0.00e+00
+Vth:         9.98e-01
+Vdsat:       4.18e-02
+Gm:          9.25e-10
+Gds:         2.99e-12
+Gmb:         4.99e-10
+Cbd:         0.00e+00
+Cbs:         0.00e+00
+Cgsov:       2.00e-16
+Cgdov:       2.00e-16
+Cgbov:       7.29e-17
+Cgs:         0.00e+00
+Cgd:         0.00e+00
+Cgb:         8.95e-16
+
+
+Total elapsed time: 0.332 seconds.
+

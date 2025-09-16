@@ -1,0 +1,58 @@
+LTspice 24.0.9 for Windows
+Circuit: * GA CMOS Amp | W=3.762390335125157e-05 L=2.1304814541845578e-07 Vbias=0.9030975620201039
+Start Time: Mon Sep  8 21:07:13 2025
+solver = Normal
+Maximum thread count: 2
+tnom = 27
+temp = 27
+method = modified trap
+AsciiRawFile = 1
+Instance "m1": Length shorter than recommended for a level 3 MOSFET.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+Gmin = 1677.72
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+Gmin = 1614.27
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195312
+Gmin = 1604.85
+vernier = 0.000976562
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping succeeded in finding the operating point.
+
+Semiconductor Device Operating Points:
+                        --- MOSFET Transistors ---
+Name:          m1
+Model:        n_1u
+Id:         -1.10e-03
+Vgs:         9.03e-01
+Vds:        -8.00e-02
+Vbs:         0.00e+00
+Vth:        -2.34e+00
+Vdsat:      -1.13e+02
+Gm:          1.40e+00
+Gds:         9.36e-01
+Gmb:        -1.82e+01
+Cbd:         0.00e+00
+Cbs:         0.00e+00
+Cgsov:       7.52e-15
+Cgdov:       7.52e-15
+Cgbov:       1.30e-18
+Cgs:         0.00e+00
+Cgd:         5.65e-16
+Cgb:         0.00e+00
+
+
+Total elapsed time: 0.315 seconds.
+
