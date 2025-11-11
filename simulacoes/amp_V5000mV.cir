@@ -1,0 +1,31 @@
+* Netlist adaptada do 'CMOS class AB Output STAGES_FINAL.asc'
+.param Vbias=5.0
+
+* Modelos de fallback
+.model nmos NMOS
+.model pmos PMOS
+
+* Biblioteca de processo
+.include "C:\Users\holam\OneDrive - Sociedade Visconde de São Leopoldo\Área de Trabalho\otimizacao-cmos-unisantos\C5_models_SPICE.txt"
+
+* Componentes (Baseado no .asc) [cite: 1, 2, 3, 4]
+M8   out bias 0 0     nmos l=0.6u w=5u
+M6   out in   Vdd Vdd pmos l=0.6u w=10u
+M3   in  in   Vdd Vdd pmos l=0.6u w=10u
+M2   in  bias 0 0     nmos l=0.6u w=5u
+
+* Fontes (Baseado no .asc) 
+V4    bias 0      DC 5.0
+Vdd   Vdd  0      DC 5
+V2    in   0      AC 1
+Vdd1  out  0      DC 0  * Sonda de corrente para medição (como no .asc)
+
+* Análises
+.op
+.ac dec 1000 1e8 1e9 * Range do .asc 
+
+* Medições no log (Medições do script original)
+.measure ac GMAX MAX mag(v(out)/v(in))
+.measure ac FC   WHEN mag(v(out)/v(in))=GMAX/sqrt(2)
+
+.end

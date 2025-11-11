@@ -1,0 +1,54 @@
+LTspice 24.0.9 for Windows
+Circuit: * Netlist adaptada do 'CMOS class AB Output STAGES_FINAL.asc'
+Start Time: Sat Oct 18 16:39:56 2025
+Ignoring BSIM parameter XL
+Ignoring BSIM parameter XW
+Ignoring BSIM parameter XL
+Ignoring BSIM parameter XW
+solver = Normal
+Maximum thread count: 2
+tnom = 27
+temp = 27
+method = modified trap
+AsciiRawFile = 1
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Direct Newton iteration for .op point succeeded.
+Semiconductor Device Operating Points:
+                        --- BSIM3 MOSFETS ---
+Name:        m8          m2          m6          m3
+Model:      nmos        nmos        pmos        pmos
+Id:        0.00e+00    0.00e+00   -2.49e-03   -2.49e-03
+Vgs:       3.00e+00    3.00e+00   -5.00e+00   -5.00e+00
+Vds:       0.00e+00    0.00e+00   -5.00e+00   -5.00e+00
+Vbs:       0.00e+00    0.00e+00    0.00e+00    0.00e+00
+Vth:       6.69e-01    6.69e-01   -8.68e-01   -8.68e-01
+Vdsat:     8.93e-01    8.93e-01   -2.19e+00   -2.19e+00
+Gm:        0.00e+00    0.00e+00    7.55e-04    7.55e-04
+Gds:       1.20e-03    1.20e-03    7.13e-05    7.13e-05
+Gmb        0.00e+00    0.00e+00    1.40e-04    1.40e-04
+Cbd:       0.00e+00    0.00e+00    0.00e+00    0.00e+00
+Cbs:       0.00e+00    0.00e+00    0.00e+00    0.00e+00
+Cgsov:     9.01e-16    9.01e-16    2.74e-15    2.74e-15
+Cgdov:     9.01e-16    9.01e-16    2.74e-15    2.74e-15
+Cgbov:     5.28e-16    5.28e-16    4.89e-16    4.89e-16
+dQgdVgb:   8.25e-15    8.25e-15    1.51e-14    1.51e-14
+dQgdVdb:  -3.76e-15   -3.76e-15   -2.71e-15   -2.71e-15
+dQgdVsb:  -3.28e-15   -3.28e-15   -1.20e-14   -1.20e-14
+dQddVgb:  -3.86e-15   -3.86e-15   -6.56e-15   -6.56e-15
+dQddVdb:   3.50e-15    3.50e-15    2.72e-15    2.72e-15
+dQddVsb:   1.21e-15    1.21e-15    4.81e-15    4.81e-15
+dQbdVgb:  -5.33e-16   -5.33e-16   -2.00e-15   -2.00e-15
+dQbdVdb:  -2.34e-15   -2.34e-15    5.11e-18    5.11e-18
+dQbdVsb:  -4.00e-17   -4.00e-17   -3.30e-16   -3.30e-16
+
+
+
+gmax: MAX(mag(v(out)/v(in)))=(-infdB,0°) FROM 1e+08 TO 1e+09
+
+Measurement "fc" FAIL'ed
+
+Total elapsed time: 3.568 seconds.
+

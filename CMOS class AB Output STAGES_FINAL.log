@@ -1,0 +1,128 @@
+LTspice 24.0.9 for Windows
+Circuit: * C:\Users\holam\OneDrive - Sociedade Visconde de São Leopoldo\Área de Trabalho\otimizacao-cmos-unisantos\CMOS class AB Output STAGES_FINAL.asc
+Start Time: Sun Oct  5 16:10:52 2025
+Ignoring BSIM parameter XL
+Ignoring BSIM parameter XW
+Ignoring BSIM parameter XL
+Ignoring BSIM parameter XW
+solver = Normal
+Maximum thread count: 2
+
+
+
+WARNING: Node VDD is floating.
+
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Direct Newton iteration for .op point succeeded.
+.step vbias=1
+
+
+
+.step vbias=1.5
+
+
+
+.step vbias=2
+
+
+
+.step vbias=2.5
+
+
+
+.step vbias=3
+
+
+
+.step vbias=3.5
+
+
+
+.step vbias=4
+
+
+
+.step vbias=4.5
+tnom = 27
+temp = 27
+method = modified trap
+.step vbias=5
+
+
+Measurement: av_db
+  step	20*log10(mag(v(out)/v(in)))
+     1	(30.5055dB,180°)
+     2	(31.8728dB,180°)
+     3	(32.404dB,180°)
+     4	(32.706dB,180°)
+     5	(32.9028dB,180°)
+     6	(33.0375dB,180°)
+     7	(33.1241dB,180°)
+     8	(33.1687dB,180°)
+     9	(33.1903dB,180°)
+
+Measurement: at=0.5g
+  step	at=0.5g	FROM	TO
+     1	9e+08	1e+08	1e+09
+     2	9e+08	1e+08	1e+09
+     3	9e+08	1e+08	1e+09
+     4	9e+08	1e+08	1e+09
+     5	9e+08	1e+08	1e+09
+     6	9e+08	1e+08	1e+09
+     7	9e+08	1e+08	1e+09
+     8	9e+08	1e+08	1e+09
+     9	9e+08	1e+08	1e+09
+
+Measurement: gain
+  step	(v(out)/v(in))
+     1	(-33.5178dB,80.1331°)
+     2	(-39.2318dB,84.417°)
+     3	(-41.7061dB,85.7383°)
+     4	(-43.1816dB,86.3953°)
+     5	(-44.1714dB,86.7905°)
+     6	(-44.8617dB,87.0537°)
+     7	(-45.3114dB,87.2383°)
+     8	(-45.5442dB,87.3554°)
+     9	(-45.6576dB,87.4092°)
+
+Measurement: po_in
+  step	v(in)*i(v2)
+     1	(-90.5669dB,-90.2275°)
+     2	(-90.5627dB,-90.119°)
+     3	(-90.5619dB,-90.0897°)
+     4	(-90.5617dB,-90.0757°)
+     5	(-90.5615dB,-90.0676°)
+     6	(-90.5614dB,-90.0624°)
+     7	(-90.5614dB,-90.0593°)
+     8	(-90.5613dB,-90.0577°)
+     9	(-90.5613dB,-90.057°)
+
+Measurement: po_out
+  step	v(out)*i(vdd1)
+     1	(-139.318dB,-25.1975°)
+     2	(-144.475dB,-14.3237°)
+     3	(-146.834dB,-10.9336°)
+     4	(-148.262dB,-9.24149°)
+     5	(-149.225dB,-8.21995°)
+     6	(-149.895dB,-7.53397°)
+     7	(-150.323dB,-7.042°)
+     8	(-150.535dB,-6.71987°)
+     9	(-150.641dB,-6.57313°)
+
+Measurement: po_eff
+  step	po_out/po_in
+     1	(-48.7516dB,65.0301°)
+     2	(-53.9127dB,75.7953°)
+     3	(-56.2725dB,79.1561°)
+     4	(-57.7007dB,80.8342°)
+     5	(-58.6635dB,81.8476°)
+     6	(-59.3331dB,82.5285°)
+     7	(-59.7612dB,83.0173°)
+     8	(-59.9741dB,83.3379°)
+     9	(-60.0797dB,83.4839°)
+
+Total elapsed time: 3.257 seconds.
+

@@ -1,0 +1,58 @@
+Title: * Netlist adaptada do 'CMOS class AB Output STAGES_FINAL.asc'
+Date: Sat Oct 18 16:39:46 2025
+Plotname: Operating Point
+Flags: real
+No. Variables: 24
+No. Points:            1
+Offset:    0.0000000000000000e+00
+Command: Linear Technology Corporation LTspice
+Variables:
+	0	V(out)	voltage
+	1	V(bias)	voltage
+	2	V(in)	voltage
+	3	V(vdd)	voltage
+	4	Id(M8)	device_current
+	5	Ig(M8)	device_current
+	6	Ib(M8)	device_current
+	7	Is(M8)	device_current
+	8	Id(M2)	device_current
+	9	Ig(M2)	device_current
+	10	Ib(M2)	device_current
+	11	Is(M2)	device_current
+	12	Id(M6)	device_current
+	13	Ig(M6)	device_current
+	14	Ib(M6)	device_current
+	15	Is(M6)	device_current
+	16	Id(M3)	device_current
+	17	Ig(M3)	device_current
+	18	Ib(M3)	device_current
+	19	Is(M3)	device_current
+	20	I(V4)	device_current
+	21	I(Vdd)	device_current
+	22	I(V2)	device_current
+	23	I(Vdd1)	device_current
+Values:
+0		0.000000000000000e+00
+	2.000000000000000e+00
+	0.000000000000000e+00
+	5.000000000000000e+00
+	0.000000000000000e+00
+	0.000000000000000e+00
+	0.000000000000000e+00
+	-0.000000000000000e+00
+	0.000000000000000e+00
+	0.000000000000000e+00
+	0.000000000000000e+00
+	-0.000000000000000e+00
+	-2.492208355102390e-03
+	-0.000000000000000e+00
+	5.010000000000000e-12
+	2.492208350092391e-03
+	-2.492208355102390e-03
+	-0.000000000000000e+00
+	5.010000000000000e-12
+	2.492208350092391e-03
+	0.000000000000000e+00
+	-4.984416710204782e-03
+	2.492208355102391e-03
+	2.492208355102391e-03

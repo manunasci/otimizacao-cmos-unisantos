@@ -8,7 +8,7 @@ import csv
 # -------------------------------------------------------------------
 # 1) CAMINHO ABSOLUTO DA SUA BIBLIOTECA .lib
 # -------------------------------------------------------------------
-LIB_PATH = r"C:\Users\holam\OneDrive - Sociedade Visconde de São Leopoldo\Área de Trabalho\otimizacao-cmos-unisantos\transistor_model.lib"
+LIB_PATH = r"C:\Users\holam\OneDrive - Sociedade Visconde de São Leopoldo\Área de Trabalho\otimizacao-cmos-unisantos\C5_models_SPICE.txt"
 
 # -------------------------------------------------------------------
 # 2) LOCALIZAÇÃO DO EXECUTÁVEL LTspice
@@ -19,20 +19,20 @@ if not candidates:
 LTSPICE_EXE = candidates[0]
 
 # -------------------------------------------------------------------
-# 3) CONFIGURAÇÃO DE PARÂMETROS
+# 3) CONFIGURAÇÃO DE PARÂMETROS (AJUSTADO PARA O .asc)
 # -------------------------------------------------------------------
 WORKDIR     = "simulacoes"
 os.makedirs(WORKDIR, exist_ok=True)
 
-W_vals     = [10e-6, 20e-6, 30e-6]
-L_vals     = [0.18e-6, 0.5e-6]
-Vbias_vals = [0.7, 1.0, 1.2]
+# O .asc varre Vbias de 1 a 5V com passos de 0.5V 
+# W e L são fixos no novo circuito 
+Vbias_vals = np.arange(1.0, 5.0 + 0.5, 0.5)
 
 # -------------------------------------------------------------------
-# 4) TEMPLATE DE NETLIST COM .measure (nível principal)
+# 4) TEMPLATE DE NETLIST (AJUSTADO PARA O .asc)
 # -------------------------------------------------------------------
-NETLIST_TEMPLATE = f"""* Amplificador CMOS – W={{W}} L={{L}} Vbias={{Vbias}}
-.param W={{W}} L={{L}} Vbias={{Vbias}}
+NETLIST_TEMPLATE = f"""* Netlist adaptada do 'CMOS class AB Output STAGES_FINAL.asc'
+.param Vbias={{Vbias}}
 
 * Modelos de fallback
 .model nmos NMOS
@@ -41,18 +41,23 @@ NETLIST_TEMPLATE = f"""* Amplificador CMOS – W={{W}} L={{L}} Vbias={{Vbias}}
 * Biblioteca de processo
 .include "{LIB_PATH}"
 
-* Componentes
-M1    out in   bias 0   nmos W={{W}} L={{L}}
-Rload out vdd       10k
-Vbias bias 0        DC {{Vbias}}
-Vin   in   0        AC 1
-Vdd   vdd  0        DC 1.8
+* Componentes (Baseado no .asc) [cite: 1, 2, 3, 4]
+M8   out bias 0 0     nmos l=0.6u w=5u
+M6   out in   Vdd Vdd pmos l=0.6u w=10u
+M3   in  in   Vdd Vdd pmos l=0.6u w=10u
+M2   in  bias 0 0     nmos l=0.6u w=5u
+
+* Fontes (Baseado no .asc) 
+V4    bias 0      DC {{Vbias}}
+Vdd   Vdd  0      DC 5
+V2    in   0      AC 1
+Vdd1  out  0      DC 0  * Sonda de corrente para medição (como no .asc)
 
 * Análises
 .op
-.ac dec 100 1 1e9
+.ac dec 1000 1e8 1e9 * Range do .asc 
 
-* Medições no log
+* Medições no log (Medições do script original)
 .measure ac GMAX MAX mag(v(out)/v(in))
 .measure ac FC   WHEN mag(v(out)/v(in))=GMAX/sqrt(2)
 
@@ -60,24 +65,26 @@ Vdd   vdd  0        DC 1.8
 """
 
 # -------------------------------------------------------------------
-# 5) VARREDURA E COLETA
+# 5) VARREDURA E COLETA (AJUSTADO PARA VARRER SÓ Vbias)
 # -------------------------------------------------------------------
 results = []
-for W, L, Vb in itertools.product(W_vals, L_vals, Vbias_vals):
-    tag      = f"W{W:.0e}_L{L:.0e}_V{int(Vb*1e3)}mV"
+# Loop alterado para varrer apenas Vb
+for Vb in Vbias_vals:
+    tag      = f"V{int(Vb*1e3)}mV"
     cir_path = os.path.join(WORKDIR, f"amp_{tag}.cir")
     log_path = os.path.join(WORKDIR, f"amp_{tag}.log")
 
     # Gera netlist
     with open(cir_path, "w") as f:
-        f.write(NETLIST_TEMPLATE.format(W=W, L=L, Vbias=Vb))
+        # Format alterado para passar apenas Vbias
+        f.write(NETLIST_TEMPLATE.format(Vbias=Vb))
 
     # Roda LTspice em batch/ASCII
     cmd = [LTSPICE_EXE, "-ascii", "-b", cir_path, "-log", log_path]
     print("⏳ Executando:", " ".join(cmd))
     subprocess.run(cmd, check=True)
 
-    # Parse das medições no log
+    # Parse das medições no log (Lógica mantida)
     Gmax = np.nan
     fc   = np.nan
     Idd  = np.nan
@@ -93,20 +100,24 @@ for W, L, Vb in itertools.product(W_vals, L_vals, Vbias_vals):
                 fc    = float(parts[0])
             elif "I(Vdd)" in line:
                 try:
+                    # Mede a corrente da fonte Vdd (que agora é 5V)
                     Idd = abs(float(line.split()[1]))
                 except:
                     pass
 
-    Power = 1.8 * Idd
-    results.append((W, L, Vb, Gmax, fc, Power))
+    # Cálculo de potência ajustado para Vdd=5V 
+    Power = 5.0 * Idd
+    # Resultado alterado para refletir a nova varredura
+    results.append((Vb, Gmax, fc, Power))
 
 # -------------------------------------------------------------------
-# 6) SALVA NO CSV
+# 6) SALVA NO CSV (AJUSTADO PARA NOVOS DADOS)
 # -------------------------------------------------------------------
 csv_path = os.path.join(WORKDIR, "simulation_results.csv")
 with open(csv_path, "w", newline="") as f:
     w = csv.writer(f)
-    w.writerow(["W (m)", "L (m)", "Vbias (V)", "Gain (dB)", "fc (Hz)", "Power (W)"])
+    # Colunas do CSV alteradas
+    w.writerow(["Vbias (V)", "Gain (dB)", "fc (Hz)", "Power (W)"])
     w.writerows(results)
 
 print("✅ Pronto! Veja:", csv_path)
